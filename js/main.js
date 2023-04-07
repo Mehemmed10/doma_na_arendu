@@ -1,7 +1,3 @@
-/**
- * NodeList.prototype.forEach() polyfill
- * https://developer.mozilla.org/en-US/docs/Web/API/NodeList/forEach#Polyfill
- */
 if (window.NodeList && !NodeList.prototype.forEach) {
   NodeList.prototype.forEach = function (callback, thisArg) {
     thisArg = thisArg || window;
@@ -10,6 +6,15 @@ if (window.NodeList && !NodeList.prototype.forEach) {
     }
   };
 }
+
+/* раскрывает меню*/
+const navSidebarToggleBtn = document.querySelector(".nav-item_dropdown");
+const navIcon = document.querySelector(".dropdown-menu");
+
+// Клик по кнопке для скрытия / показа фильтра и изменения исконки
+navSidebarToggleBtn.onclick = function () {
+  navIcon.classList.toggle("show");
+};
 
 /* Фильтр на мобильный устроствах */
 const sidebarToggleBtn = document.querySelector(".menu-icon-wrapper");
@@ -85,3 +90,33 @@ showMoreOptions.onclick = function (e) {
     showMoreOptions.dataset.options = "hidden";
   }
 };
+
+// кнопка вверх
+function backToTop() {
+  let button = $(".back-to-top");
+
+  $(window).on("scroll", () => {
+    if ($(this).scrollTop() >= 50) {
+      button.fadeIn();
+    } else {
+      button.fadeOut();
+    }
+  });
+
+  button.on("click", (e) => {
+    e.preventDefault();
+    $("html").animate({ scrollTop: 0 }, 1000);
+  });
+}
+backToTop();
+// скроллинг к блоку
+$(".scroll-to-block").click(function (e) {
+  e.preventDefault();
+  let target = $(this).data("block");
+  $("html,body").animate(
+    {
+      scrollTop: $(target).offset().top,
+    },
+    300
+  );
+});
